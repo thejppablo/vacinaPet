@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
-import 'package:async/async.dart';
-
-const request = "http://api.hgbrasil.com/finance?format=json&key=531bdba6";
+import 'package:vacina_pet/telas/boas_vindas.dart';
 
 void main() {
-  runApp(MyApp()
-  );
+  runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("VacinaPet",style: TextStyle(),),
-              TextFormField(),
-              TextFormField(),
-              
+    return MaterialApp(
+      title: 'VacinaPet',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
 
-            ],
-          ),
-        ),
+        primarySwatch: Colors.blue,
       ),
+      home: BoasVindasPage(),
     );
   }
 }
