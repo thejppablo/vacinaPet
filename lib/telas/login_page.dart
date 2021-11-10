@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -25,13 +26,25 @@ class _LoginPageState extends State<LoginPage> {
           key: _formkey,
       child: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Container(
+                width: 200,
+                height: 200,
+                child: Image.asset('assets/images/VacinaPet.jpg'),
+              ),
               TextFormField(
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  labelText: 'Usuário',
+                  hintText: 'Usuário',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(top:15),
+                    child: Icon(
+                        Icons.account_box_outlined,
+                    ),
+                  ),
                 ),
                 controller: _usernameController,
                 keyboardType: TextInputType.emailAddress,
@@ -43,8 +56,16 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               TextFormField(
+
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  labelText: 'senha',
+                  hintText: 'Senha',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(top:15),
+                    child: Icon(
+                      Icons.vpn_key_outlined
+                    ),
+                  ),
                 ),
                 controller: _passwordController,
                 keyboardType: TextInputType.text,
@@ -61,7 +82,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30.0,
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red)
+                ),
                 onPressed: () async {
+
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (_formkey.currentState!.validate()) {
                     bool validResponse = await login();
@@ -84,21 +109,46 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }
                 },
+
                 child: Text("Login"),
               ),
+
+
               TextButton(
+                  style: TextButton.styleFrom(
+                      primary: Colors.black54
+                  ),
+
                   onPressed: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CadastroPage())
+                  },
+                  child: Text("Não possui uma conta?"),
+
+
+              ),
+
+              ElevatedButton(
+
+                style: ButtonStyle(
+                    backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red)
+                ),
+                  onPressed: (){
+
+
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CadastroPage())
                     );
                   },
-                  child: Text("Não possui uma conta? Cadastre-se!"))
+                child: Text("Cadastre-se"),
+              ),
             ],
           ),
         ),
       ),
-    ));
-  }
+    )
+  );
+}
+
+
 
   final snackBar = SnackBar(
     content: Text(

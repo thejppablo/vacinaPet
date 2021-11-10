@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
           Text("Home Page",textAlign: TextAlign.center,),
           TextButton(
               onPressed: () async{
+
                 bool isLoggedOff = await logOff();
                 if(isLoggedOff){
                   Navigator.pushReplacement(context,
