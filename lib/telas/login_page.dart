@@ -26,13 +26,13 @@ class _LoginPageState extends State<LoginPage> {
           key: _formkey,
       child: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                width: 200,
-                height: 200,
+                width: 100,
+                height: 250,
                 child: Image.asset('assets/images/VacinaPet.jpg'),
               ),
               TextFormField(
@@ -56,14 +56,13 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               TextFormField(
-
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Senha',
                   prefixIcon: Padding(
                     padding: EdgeInsets.only(top:15),
                     child: Icon(
-                      Icons.vpn_key_outlined
+                      Icons.lock_outlined
                     ),
                   ),
                 ),
@@ -78,12 +77,17 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
+
               SizedBox(
                 height: 30.0,
+                width: 30.0,
+              ),
+              Container(
+                height: 5,
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red)
+                  backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red),
                 ),
                 onPressed: () async {
 
@@ -110,12 +114,25 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
 
-                child: Text("Login"),
-              ),
+                child: Text("Login",
+                  style: TextStyle(
+                      fontSize: 20
+                ),
+              ),),
 
 
-              TextButton(
-                  style: TextButton.styleFrom(
+              Container(
+                height: 150,
+                child: Align(
+                  alignment: Alignment(-0.70,1.00),
+                child: Text('Não possui uma conta?',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                )),
+                        ),
+
+                 /* style: TextButton.styleFrom(
                       primary: Colors.black54
                   ),
 
@@ -124,12 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text("Não possui uma conta?"),
 
 
-              ),
+              ),*/
 
               ElevatedButton(
 
+
                 style: ButtonStyle(
-                    backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red)
+                    backgroundColor:MaterialStateProperty.resolveWith((states) => Colors. red)
                 ),
                   onPressed: (){
 
@@ -138,7 +156,11 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => CadastroPage())
                     );
                   },
-                child: Text("Cadastre-se"),
+                child: Text("Cadastre-se",
+                style: TextStyle(
+                  fontSize: 20
+                  ),
+                ),
               ),
             ],
           ),
