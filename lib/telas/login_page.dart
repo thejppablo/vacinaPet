@@ -23,26 +23,29 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Form(
-          key: _formkey,
+      key: _formkey,
       child: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /*
               Container(
                 width: 100,
                 height: 250,
                 child: Image.asset('assets/images/VacinaPet.jpg'),
               ),
+              */
+              Text("Vacinapet", style: TextStyle(fontFamily: 'Sofadi One',fontSize: 50,height: 5),),
               TextFormField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: 'Usuário',
                   prefixIcon: Padding(
-                    padding: EdgeInsets.only(top:15),
+                    padding: EdgeInsets.only(top: 0),
                     child: Icon(
-                        Icons.account_box_outlined,
+                      Icons.account_box_outlined,
                     ),
                   ),
                 ),
@@ -60,10 +63,8 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   hintText: 'Senha',
                   prefixIcon: Padding(
-                    padding: EdgeInsets.only(top:15),
-                    child: Icon(
-                      Icons.lock_outlined
-                    ),
+                    padding: EdgeInsets.only(top: 15),
+                    child: Icon(Icons.lock_outlined),
                   ),
                 ),
                 controller: _passwordController,
@@ -77,29 +78,28 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-
               SizedBox(
                 height: 30.0,
                 width: 30.0,
               ),
-              Container(
-                height: 5,
-              ),
+
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:MaterialStateProperty.resolveWith((states) => Colors.red),
+                  backgroundColor:
+                      MaterialStateProperty.resolveWith((states) => Colors.red),
                 ),
                 onPressed: () async {
-
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (_formkey.currentState!.validate()) {
                     bool validResponse = await login();
-              ///o foco nesse caso seria o teclado do celular aberto
+
+                    ///o foco nesse caso seria o teclado do celular aberto
                     if (!currentFocus.hasPrimaryFocus) {
-              ///se ele tem o foco atual ele é desfocado e o teclado sera fechado
+                      ///se ele tem o foco atual ele é desfocado e o teclado sera fechado
                       currentFocus.unfocus();
                     }
-              ///se a função login retornar true essa pagina é apagada e o app troca para a HomePage
+
+                    ///se a função login retornar true essa pagina é apagada e o app troca para a HomePage
                     if (validResponse) {
                       Navigator.pushReplacement(
                         context,
@@ -113,64 +113,44 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }
                 },
-
-                child: Text("Login",
-                  style: TextStyle(
-                      fontSize: 20
+                child: Center(
+                  child: Text(
+                    "Login",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
-              ),),
-
-
+              ),
               Container(
                 height: 150,
                 child: Align(
-                  alignment: Alignment(-0.70,1.00),
-                child: Text('Não possui uma conta?',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                )),
-                        ),
-
-                 /* style: TextButton.styleFrom(
-                      primary: Colors.black54
-                  ),
-
-                  onPressed: (){
-                  },
-                  child: Text("Não possui uma conta?"),
-
-
-              ),*/
+                    alignment: Alignment(-0.70, 1.00),
+                    child: Text(
+                      'Não possui uma conta?',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    )),
+              ),
 
               ElevatedButton(
-
-
                 style: ButtonStyle(
-                    backgroundColor:MaterialStateProperty.resolveWith((states) => Colors. red)
-                ),
-                  onPressed: (){
-
-
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) => Colors.red)),
+                onPressed: () {
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CadastroPage())
-                    );
-                  },
-                child: Text("Cadastre-se",
-                style: TextStyle(
-                  fontSize: 20
-                  ),
+                      MaterialPageRoute(builder: (context) => CadastroPage()));
+                },
+                child: Text(
+                  "Cadastre-se",
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ],
           ),
         ),
       ),
-    )
-  );
-}
-
-
+    ));
+  }
 
   final snackBar = SnackBar(
     content: Text(
@@ -191,9 +171,10 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-  ///salva o token localmente pelo shared_preferences o primeiro arg é a key e o segundo é o valor salvo
-      await sharedPreferences.setString('token', 'Token ${jsonDecode(response.body)['token']}');
-      //print(jsonDecode(response.body)['token']);
+      ///salva o token localmente pelo shared_preferences o primeiro arg é a key e o segundo é o valor salvo
+      await sharedPreferences.setString(
+          'token', 'Token ${jsonDecode(response.body)['token']}');
+      print(jsonDecode(response.body));
       //print("Resposta: ${response.statusCode}");
       return true;
     } else {

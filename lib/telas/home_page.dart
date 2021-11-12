@@ -13,21 +13,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text("Home Page",textAlign: TextAlign.center,),
-          TextButton(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text("Meus Pets"),
+        centerTitle: true,
+        actions: [
+          IconButton(icon: const Icon(Icons.logout),
               onPressed: () async{
 
                 bool isLoggedOff = await logOff();
                 if(isLoggedOff){
                   Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BoasVindasPage()));
+                      MaterialPageRoute(builder: (context) => BoasVindasPage()));
                 }
-              },
-              child: Text("sair"))
+              }
+          )
+      ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text("Home Page",textAlign: TextAlign.center,),
         ],
       ),
 
