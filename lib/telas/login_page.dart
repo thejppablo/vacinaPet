@@ -30,13 +30,6 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              /*
-              Container(
-                width: 100,
-                height: 250,
-                child: Image.asset('assets/images/VacinaPet.jpg'),
-              ),
-              */
               Text("Vacinapet", style: TextStyle(fontFamily: 'Sofadi One',fontSize: 50,height: 5),),
               TextFormField(
                 textAlign: TextAlign.center,
@@ -172,10 +165,15 @@ class _LoginPageState extends State<LoginPage> {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       ///salva o token localmente pelo shared_preferences o primeiro arg é a key e o segundo é o valor salvo
-      await sharedPreferences.setString(
-          'token', 'Token ${jsonDecode(response.body)['token']}');
-      print(jsonDecode(response.body));
-      //print("Resposta: ${response.statusCode}");
+      await sharedPreferences.setString('accessToken', jsonDecode(response.body)['accessToken']);
+      //print("BODY DA RESPOSTA: ${jsonDecode(response.body)}");
+      /*
+      print("Resposta: ${response.statusCode}");
+      print("ACCESS TOKKEENN:   ");
+      print(jsonDecode(response.body)['accessToken']);
+      print("EMAIL DO CARA:      ");
+      print(jsonDecode(response.body)['user']['email']);
+      */
       return true;
     } else {
       //print("Resposta: ${response.statusCode}");

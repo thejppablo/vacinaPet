@@ -152,7 +152,7 @@ class _CadastroPageState extends State<CadastroPage> {
     );
     if (response.statusCode == 201) {
       print("DEU BOM");
-      print(jsonDecode(response.body)['token']);
+      print(jsonDecode(response.body)['accessToken']);
       return true;
     } else {
       print("Resposta: ${response.statusCode}");
