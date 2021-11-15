@@ -94,18 +94,18 @@ class _PetListState extends State<PetList> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  //leading: CircleAvatar(backgroundImage: NetworkImage(snapshot.data[index].url),),
-                  ///esse title parece ser o do json
-                  title: Text(snapshot.data[index].name),
-                  //subtitle: Text(snapshot.data[index].url),
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PerfilPet(snapshot.data[index])));
-                  },
-                );
+                        //leading: CircleAvatar(backgroundImage: NetworkImage(snapshot.data[index].url),),
+                        title: Text("Nome: ${snapshot.data[index].name}"),
+                        subtitle: Text("Raça: ${snapshot.data[index].animalRace}"),
+                        onTap: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => PerfilPet(snapshot.data[index])));
+                        },
+                      );
               }
           );
         }else if(snapshot.hasError){
+          print(snapshot.error);
           return Container(
             child: Center(
                 child: Text("Data not found")),

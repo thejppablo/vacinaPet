@@ -75,7 +75,7 @@ class _PetRegisterState extends State<PetRegister> {
 ///           Altura
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'Altura(m)',
+                      labelText: 'Altura(M)',
                     ),
                     controller: _heightController,
                     keyboardType: TextInputType.number,
@@ -217,8 +217,8 @@ class _PetRegisterState extends State<PetRegister> {
       body: {
         "name": _nameController.text,
         "animal_race": _raceController.text,
-        "height": _birthDateController.text,
-        "weight": _heightController.text,
+        "height": _heightController.text,
+        "weight": _weightController.text,
         "birth_date": _birthDateController.text,
         "sex": _sex,
         "userId": sharedPreference.getString('userId').toString(),

@@ -47,10 +47,7 @@ class _BoasVindasPageState extends State<BoasVindasPage> {
  ///verifica se o app tem um token de api/instance ja salva no app
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     if(sharedPreference.getString('accessToken') != null){
-      print('ACCESS TOKEN SALVO LOCALMENTE: ');
-      print(sharedPreference.getString('accessToken'));
-      print("USER ID: ");
-      print(sharedPreference.getString('userId'));
+      //print('ACCESS TOKEN SALVO LOCALMENTE: ${sharedPreference.getString('accessToken')}');
       return true;
     }else{
       return false;

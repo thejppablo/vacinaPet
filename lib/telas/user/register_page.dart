@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:vacina_pet/telas/pets/home_page.dart';
 
-
 class CadastroPage extends StatefulWidget {
   const CadastroPage({Key? key}) : super(key: key);
 
@@ -14,19 +13,19 @@ class CadastroPage extends StatefulWidget {
 
 class _CadastroPageState extends State<CadastroPage> {
   final _formkey = GlobalKey<FormState>();
-  final _nameController =     TextEditingController();
-  final _emailController =    TextEditingController();
-  final _cpfController =      TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _cpfController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cadastro"),
-        centerTitle: true,
-        backgroundColor: Colors.red,
-      ),
+        appBar: AppBar(
+          title: Text("Cadastro"),
+          centerTitle: true,
+          backgroundColor: Colors.red,
+        ),
         body: Form(
           key: _formkey,
           child: Center(
@@ -58,7 +57,7 @@ class _CadastroPageState extends State<CadastroPage> {
                       if (email == null || email.isEmpty) {
                         return 'Por favor, digite seu e-mail';
                       } else if (!RegExp(
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(_emailController.text)) {
                         return 'Por favor, insira um e-mail válido';
                       }
@@ -159,4 +158,3 @@ class _CadastroPageState extends State<CadastroPage> {
     }
   }
 }
-
