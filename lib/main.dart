@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vacina_pet/telas/boas_vindas.dart';
+import 'package:vacina_pet/telas/user/boas_vindas.dart';
 
 void main() {
   runApp(const MyApp());

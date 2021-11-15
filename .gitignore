@@ -1,6 +1,7 @@
 #
-lib/telas/teste.dart
-lib/dropdown.dart
+lib/rascunhos/teste.dart
+lib/rascunhos/dropdown.dart
+lib/rascunhos/teste_dois.dart
 # Miscellaneous
 *.class
 *.log

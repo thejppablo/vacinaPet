@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:vacina_pet/telas/home_page.dart';
-import 'package:vacina_pet/telas/register_page.dart';
+import 'package:vacina_pet/telas/pets/home_page.dart';
+import 'package:vacina_pet/telas/user/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

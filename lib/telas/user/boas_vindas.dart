@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vacina_pet/telas/home_page.dart';
-import 'package:vacina_pet/telas/login_page.dart';
+import 'package:vacina_pet/telas/pets/home_page.dart';
+import 'package:vacina_pet/telas/user/login_page.dart';
 
 class BoasVindasPage extends StatefulWidget {
   const BoasVindasPage({Key? key}) : super(key: key);
