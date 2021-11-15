@@ -104,7 +104,7 @@ class _CadastroPageState extends State<CadastroPage> {
                     onPressed: () async {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (_formkey.currentState!.validate()) {
-                        bool validResponse = await login();
+                        bool validResponse = await registerUser();
                         if (!currentFocus.hasPrimaryFocus) {
                           currentFocus.unfocus();
                         }
@@ -138,8 +138,7 @@ class _CadastroPageState extends State<CadastroPage> {
     backgroundColor: Colors.redAccent,
   );
 
-  Future<bool> login() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  Future<bool> registerUser() async {
     var url = Uri.parse('https://cvd-pets.herokuapp.com/user');
     var response = await http.post(
       url,

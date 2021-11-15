@@ -166,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       ///salva o token localmente pelo shared_preferences o primeiro arg é a key e o segundo é o valor salvo
       await sharedPreferences.setString('accessToken', jsonDecode(response.body)['accessToken']);
+      await sharedPreferences.setString('userId', jsonDecode(response.body)['user']['id']);
       //print("BODY DA RESPOSTA: ${jsonDecode(response.body)}");
       /*
       print("Resposta: ${response.statusCode}");

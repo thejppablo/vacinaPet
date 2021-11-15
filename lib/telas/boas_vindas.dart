@@ -49,6 +49,8 @@ class _BoasVindasPageState extends State<BoasVindasPage> {
     if(sharedPreference.getString('accessToken') != null){
       print('ACCESS TOKEN SALVO LOCALMENTE: ');
       print(sharedPreference.getString('accessToken'));
+      print("USER ID: ");
+      print(sharedPreference.getString('userId'));
       return true;
     }else{
       return false;
