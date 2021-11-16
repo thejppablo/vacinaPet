@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'dose.g.dart';
+part '../../auto_json/dose.g.dart';
 
 @JsonSerializable()
 class Dose{
@@ -16,3 +16,4 @@ class Dose{
 
   Map<String,dynamic> toJson() => _$DoseToJson(this);
 }
+

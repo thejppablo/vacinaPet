@@ -1,13 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dose.dart';
-part 'pet_vaccines.g.dart';
+part '../../auto_json/pet_vaccines.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PetVaccines{
 
   final String vaccineId;
   final String petId;
-  final Dose doses;
+  final List<Dose> doses;
 
   PetVaccines(this.vaccineId, this.petId,this.doses);
 

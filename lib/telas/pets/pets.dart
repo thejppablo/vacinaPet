@@ -25,10 +25,7 @@ class Pet {
         height = json['height'],
         weight = json['weight'],
         birthDate = json['birth_date'],
-        sex = json['sex']
-
-
-  ;
+        sex = json['sex'];
 
   Map<String, dynamic> toJson() => {
 
