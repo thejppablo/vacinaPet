@@ -60,6 +60,8 @@ Future<List<Pet>> fetchPet() async{
   );
   if (response.statusCode == 200){
     //print("PETS REGISTRADOS: ${response.body}");
+    //Future<List<Pet>> lista = compute(parsePet, response.body);
+
     return compute(parsePet, response.body);
   }else{
     print("RESPOSTA: ${response.statusCode}");
