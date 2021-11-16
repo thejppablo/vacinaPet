@@ -34,11 +34,10 @@ class _HomePageState extends State<HomePage> {
       ],
       ),
       body: PetList(),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
 
+      bottomNavigationBar: BottomAppBar(
+        child:
+            /*
             ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith(
@@ -49,21 +48,25 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            SizedBox(width: 30,),
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.red)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PetRegister()));
-              },
-              child: Text(
-                "Adicionar Pet",
-                style: TextStyle(fontSize: 20),
+            */
+
+            Container(
+              padding: EdgeInsets.only(left:10,right: 10,bottom: 10),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) => Colors.red)),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PetRegister()));
+                },
+                child: Text(
+                  "Cadastrar Pet",
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
             ),
-          ],),
+
       ),
     );
   }
