@@ -99,6 +99,9 @@ class _CadastroPageState extends State<CadastroPage> {
                     height: 30.0,
                   ),
                   ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.red)),
                     onPressed: () async {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (_formkey.currentState!.validate()) {

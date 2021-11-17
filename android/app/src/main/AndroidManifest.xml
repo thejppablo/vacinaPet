@@ -2,7 +2,7 @@
     package="com.example.vacina_pet">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="vacina_pet"
+        android:label="vacinaPet"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

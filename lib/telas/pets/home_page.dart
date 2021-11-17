@@ -37,19 +37,6 @@ class _HomePageState extends State<HomePage> {
 
       bottomNavigationBar: BottomAppBar(
         child:
-            /*
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) => Colors.red)),
-              onPressed: () {},
-              child: Text(
-                "Excluir Pet",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            */
-
             Container(
               padding: EdgeInsets.only(left:10,right: 10,bottom: 10),
               child: ElevatedButton(

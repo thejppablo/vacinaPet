@@ -9,6 +9,7 @@ part '../../auto_json/vacinas.g.dart';
 class Vacinas{
   final String id;
   final String name;
+
   Vacinas(this.id,this.name);
 
   factory Vacinas.fromJson(Map<String,dynamic> data) => _$VacinasFromJson(data);
