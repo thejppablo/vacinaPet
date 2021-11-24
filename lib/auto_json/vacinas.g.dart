@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../telas/vaccination/vacinas.dart';
+part of '../telas/vaccination/vacinas_json.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

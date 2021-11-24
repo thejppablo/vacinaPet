@@ -4,6 +4,7 @@ import 'package:vacina_pet/telas/pets/pets.dart';
 import 'package:vacina_pet/telas/user/boas_vindas.dart';
 import 'package:vacina_pet/telas/pets/pet_register.dart';
 import 'package:vacina_pet/telas/pets/perfil_pet.dart';
+import 'package:vacina_pet/telas/vaccination/cartao_de_vacina.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,49 +24,46 @@ class _HomePageState extends State<HomePage> {
         title: Text("Meus Pets"),
         centerTitle: true,
         actions: [
-          IconButton(icon: const Icon(Icons.logout),
-              onPressed: () async{
-
+          IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
                 bool isLoggedOff = await logOff();
-                if(isLoggedOff){
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => BoasVindasPage()));
+                if (isLoggedOff) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BoasVindasPage()));
                 }
-              }
-          )
-      ],
+              })
+        ],
       ),
       body: PetList(),
-
       bottomNavigationBar: BottomAppBar(
-        child:
-            Container(
-              padding: EdgeInsets.only(left:10,right: 10,bottom: 10),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => Colors.red)),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PetRegister()));
-                },
-                child: Text(
-                  "Cadastrar Pet",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
+        child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.resolveWith((states) => Colors.red)),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PetRegister()));
+            },
+            child: Text(
+              "Cadastrar Pet",
+              style: TextStyle(fontSize: 20),
             ),
-
+          ),
+        ),
       ),
     );
   }
 
-  Future<bool> logOff() async{
+  Future<bool> logOff() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     return true;
   }
-
 }
 
 class PetList extends StatefulWidget {
@@ -74,33 +74,38 @@ class PetList extends StatefulWidget {
 }
 
 class _PetListState extends State<PetList> {
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: fetchPet(),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        if(snapshot.hasData) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
           return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                        //leading: CircleAvatar(backgroundImage: NetworkImage(snapshot.data[index].url),),
-                        title: Text("Nome: ${snapshot.data[index].name}"),
-                        subtitle: Text("Raça: ${snapshot.data[index].animalRace}"),
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => PerfilPet(snapshot.data[index])));
-                        },
-                      );
-              }
-          );
-        }else if(snapshot.hasError){
+                  //leading: CircleAvatar(backgroundImage: NetworkImage(snapshot.data[index].url),),
+                  title: Text("Nome: ${snapshot.data[index].name}"),
+                  subtitle: Text("Raça: ${snapshot.data[index].animalRace}"),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) {
+                            //PerfilPet(snapshot.data[index])
+                            return CartaoVacina(snapshot.data[index]);}
+                        )
+                    );
+                  },
+                );
+              });
+        } else if (snapshot.hasError) {
           print(snapshot.error);
           return Container(
-            child: Center(
-                child: Text("Data not found")),
+            child: Center(child: Text("${snapshot.error}")),
           );
-        }else{
+        } else {
           return Container(
             child: Center(
               child: CircularProgressIndicator(),

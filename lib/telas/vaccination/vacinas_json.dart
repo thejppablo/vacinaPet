@@ -33,7 +33,7 @@ Future<List<Vacinas>> fetchVacinas() async{
   );
   if (response.statusCode == 200){
     print("VACINAS REGISTRADOS: ${response.body}");
-
+    print(compute(parseVacinas, response.body).runtimeType);
     return compute(parseVacinas, response.body);
   }else{
     print("RESPOSTA: ${response.statusCode}");

@@ -142,7 +142,7 @@ class _PetRegisterState extends State<PetRegister> {
                     ),
 
                     child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration.collapsed(hintText: ''),
+                      decoration: InputDecoration.collapsed(hintText: 'Sexo do Pet'),
                       value: _sex,
                       iconSize: 36,
                       icon: Icon(Icons.arrow_drop_down,color: Colors.black,),

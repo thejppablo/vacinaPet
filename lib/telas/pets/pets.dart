@@ -40,6 +40,7 @@ class Pet {
   };
 }
 
+///transforma a resposta do servidor em um objeto utilizavel
 List<Pet> parsePet(String responseBody) {
   var list = json.decode(responseBody) as List<dynamic>;
   List<Pet> pets = list.map((model) => Pet.fromJson(model)).toList();
@@ -47,19 +48,19 @@ List<Pet> parsePet(String responseBody) {
 }
 
 Future<List<Pet>> fetchPet() async{
-  SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   var url = Uri.parse('https://cvd-pets.herokuapp.com/pets');
   final response = await http.get(
     url,
     headers: {
-        'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
+        'Authorization': 'Bearer ${prefs.getString('accessToken').toString()}',
       }
   );
   if (response.statusCode == 200){
     //print("PETS REGISTRADOS: ${response.body}");
-    //Future<List<Pet>> lista = compute(parsePet, response.body);
 
     return compute(parsePet, response.body);
+
   }else{
     print("RESPOSTA: ${response.statusCode}");
     print("PETS REGISTRADOS: ${response.body}");
@@ -84,3 +85,4 @@ Future<bool> deletePet(String petId) async{
     throw Exception('API ERROR ${response.body}');
   }
 }
+
