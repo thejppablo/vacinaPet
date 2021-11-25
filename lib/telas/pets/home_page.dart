@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacina_pet/telas/pets/pets.dart';
 import 'package:vacina_pet/telas/user/boas_vindas.dart';
 import 'package:vacina_pet/telas/pets/pet_register.dart';
-import 'package:vacina_pet/telas/pets/perfil_pet.dart';
 import 'package:vacina_pet/telas/vaccination/cartao_de_vacina.dart';
 
 class HomePage extends StatefulWidget {

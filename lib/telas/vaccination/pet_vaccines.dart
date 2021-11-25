@@ -16,4 +16,10 @@ class PetVaccines{
   Map<String,dynamic> toJson() => _$PetVaccinesToJson(this);
 
 }
+/*
+Future<bool> postVaccines() async{
+  SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+  var url = Uri.parse('https://cvd-pets.herokuapp.com/pet-vaccines');
 
+}
+*/

@@ -59,11 +59,11 @@ Future<List<Pet>> fetchPet() async{
   if (response.statusCode == 200){
     //print("PETS REGISTRADOS: ${response.body}");
 
-    return compute(parsePet, response.body);
+    return compute(parsePet, response.body);/// = parsepet(response.body)
 
   }else{
     print("RESPOSTA: ${response.statusCode}");
-    print("PETS REGISTRADOS: ${response.body}");
+    //print("PETS REGISTRADOS: ${response.body}");
     throw Exception('API ERROR ${response.body}');
   }
 }
