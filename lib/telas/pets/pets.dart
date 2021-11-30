@@ -16,6 +16,12 @@ class Pet {
   Pet(this.id,this.name, this.animalRace,this.image,this.height,
       this.weight,this.birthDate,this.sex);
 
+  /*
+  fromJson() constructor, for constructing a new User instance from a map structure.
+  A toJson() method, which converts a User instance into a map.
+  */
+
+/// converts from map to Pet object
   Pet.fromJson(Map<String, dynamic> json)
       :
         id = json['id'],
@@ -27,6 +33,7 @@ class Pet {
         birthDate = json['birth_date'],
         sex = json['sex'];
 
+/// converts from Pet object to map
   Map<String, dynamic> toJson() => {
 
     'id' :id,
@@ -40,7 +47,7 @@ class Pet {
   };
 }
 
-///transforma a resposta do servidor em um objeto utilizavel
+///transforma a resposta do servidor em uma lista de objetos da classe
 List<Pet> parsePet(String responseBody) {
   var list = json.decode(responseBody) as List<dynamic>;
   List<Pet> pets = list.map((model) => Pet.fromJson(model)).toList();

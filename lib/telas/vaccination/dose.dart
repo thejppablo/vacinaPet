@@ -1,19 +1,51 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
-part '../../auto_json/dose.g.dart';
 
-@JsonSerializable()
 class Dose{
-  final String applicationDate;
-  final String manufacturingDate;
-  final String expirationDate;
-  final int order;
-  final String dosage, veterinary, petVaccinesId;
+   String applicationDate;
+   String manufacturingDate;
+   String expirationDate;
+   int order;
+   String dosage,
+          veterinary,
+          petVaccinesId;
 
-  Dose(this.applicationDate,this.manufacturingDate,this.expirationDate,
-      this.order,this.dosage,this.veterinary,this.petVaccinesId);
+  Dose({required this.applicationDate,
+    required this.manufacturingDate,
+    required this.expirationDate,
+    required this.order,
+    required this.dosage,
+    required this.veterinary,
+    required this.petVaccinesId});
 
-  factory Dose.fromJson(Map<String,dynamic> data) => _$DoseFromJson(data);
+  factory Dose.fromJson(Map<String, dynamic> json) => Dose(
+    applicationDate: json["applicationDate"],
+    manufacturingDate: json["manufacturingDate"],
+    expirationDate: json["expirationDate"],
+    order: json["order"],
+    dosage: json["dosage"],
+    veterinary: json["veterinary"],
+    petVaccinesId: json["petVaccinesId"],
+  );
 
-  Map<String,dynamic> toJson() => _$DoseToJson(this);
+   Map<String, dynamic> toJson() => {
+     "applicationDate": applicationDate,
+     "manufacturingDate": manufacturingDate,
+     "expirationDate": expirationDate,
+     "order": order,
+     "dosage": dosage,
+     "veterinary": veterinary,
+     "petVaccinesId": petVaccinesId,
+   };
+  //factory Dose.fromJson(Map<String,dynamic> data) => _$DoseFromJson(data);
+
+  //Map<String,dynamic> toJson() => _$DoseToJson(this);
 }
 
+
+List<Dose> parseDose(String responseBody) {
+  var list = json.decode(responseBody) as List<dynamic>;
+  List<Dose> doses = list.map((model) => Dose.fromJson(model)).toList();
+  return doses;
+}

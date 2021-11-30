@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vacina_pet/telas/pets/perfil_pet.dart';
 import 'package:vacina_pet/telas/pets/pets.dart';
+import 'package:vacina_pet/telas/vaccination/pet_vaccine_list.dart';
+
+import 'register_vaccine.dart';
 
 /*
 void main() {
@@ -41,8 +44,10 @@ class _CartaoVacinaState extends State<CartaoVacina> {
   Widget build(BuildContext context) {
     final appbarTitles = ["Vacinas","Vermífugos","${widget.pet.name}"];
     final screens = [
-      Center(child: Text("Vacinas",style: TextStyle(fontSize: 60),)),
-      Center(child: Text("Vermífugos",style: TextStyle(fontSize: 60),)),
+      //ListViewVax(widget.pet.id),
+      PetVaccineList(widget.pet),
+      ListViewVax(widget.pet.id),
+      //Center(child: Text("Vermífugos",style: TextStyle(fontSize: 60),)),
       PerfilPet(widget.pet)
     ];
     return Scaffold(

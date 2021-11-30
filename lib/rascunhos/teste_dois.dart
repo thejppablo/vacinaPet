@@ -37,8 +37,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: ElevatedButton(onPressed: ()async {
-            await fetchVacinas();
+          child: ElevatedButton(onPressed: () {
+
+            //await fetchVacinas();
           },
               child: Text("press me :)")),
         ),

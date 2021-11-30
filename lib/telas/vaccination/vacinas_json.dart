@@ -32,13 +32,30 @@ Future<List<Vacinas>> fetchVacinas() async{
       headers: {'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',}
   );
   if (response.statusCode == 200){
-    print("VACINAS REGISTRADOS: ${response.body}");
-    print(response.body.runtimeType);
+    //print("VACINAS REGISTRADOS: ${response.body}");
+    //print(response.body.runtimeType);
     return compute(parseVacinas, response.body);
   }else{
-    print("RESPOSTA: ${response.statusCode}");
-    print("VacinaS REGISTRADOS: ${response.body}");
+    //print("RESPOSTA: ${response.statusCode}");
+    //print("VacinaS REGISTRADOS: ${response.body}");
     throw Exception('API ERROR ${response.body}');
   }
+}
+
+Future<List<Vacinas>> getPetVax(String petId) async{
+  SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+
+  var url = Uri.parse('https://cvd-pets.herokuapp.com/pet-vaccines/$petId');
+  final response = await http.get(
+      url,
+      headers: {'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',}
+  );
+  if (response.statusCode == 200){
+    print(response.body);
+    return compute(parseVacinas, response.body);
+  }else{
+    throw Exception('API ERROR ${response.body}');
+  }
+
 }
 
