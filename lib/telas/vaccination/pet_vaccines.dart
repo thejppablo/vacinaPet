@@ -28,9 +28,6 @@ class PetVaccines{
      "doses": List<dynamic>.from(doses.map((x) => x.toJson())),
    };
 
-  //factory PetVaccines.fromJson(Map<String,dynamic> data) => _$PetVaccinesFromJson(data);
-
-  //Map<String,dynamic> toJson() => _$PetVaccinesToJson(this);
 
 }
 

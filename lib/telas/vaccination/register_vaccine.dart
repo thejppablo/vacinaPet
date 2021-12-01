@@ -5,27 +5,6 @@ import 'package:vacina_pet/telas/vaccination/vacinas_json.dart';
 import 'package:http/http.dart' as http;
 
 import 'dose.dart';
-/*
-void main(){
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: ListViewVax()
-        ),
-      ),
-    );
-  }
-}
-
-*/
 
 class ListViewVax extends StatefulWidget {
   final String petId;
@@ -87,29 +66,7 @@ class _ListViewVaxState extends State<ListViewVax> {
                   },
                 );
               });
-           /* Container(
-            margin: EdgeInsets.only(top: 20, right: 16, bottom: 20),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 1),
-            ),
 
-            child: DropdownButtonFormField<String>(
-                decoration: InputDecoration.collapsed(hintText: 'Vacinas'),
-                value: vax,
-                iconSize: 36,
-                icon: Icon(Icons.arrow_drop_down,color: Colors.black,),
-                isExpanded: true,
-                items: vaxNames.map(buildMenuItem).toList(),
-                onChanged: (value) => setState(()  {
-                  snapshot.data.vax;
-                  vax = value;
-                }),
-                validator: (value) => value == null ? 'Favor escolher uma vacina' : null
-            ),
-
-          ); */
         } else if (snapshot.hasError) {
           print(snapshot.error);
           return Container(

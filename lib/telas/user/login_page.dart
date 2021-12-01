@@ -18,11 +18,18 @@ class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool is_loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Form(
+        body: is_loading ? Center(
+          child: CircularProgressIndicator(
+            color: Colors.red,
+          ),
+        ) :
+
+        Form(
       key: _formkey,
       child: Center(
         child: SingleChildScrollView(
@@ -84,6 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (_formkey.currentState!.validate()) {
+                    setState(() {
+                      is_loading = true;
+                    });
                     bool validResponse = await login();
 
                     ///o foco nesse caso seria o teclado do celular aberto
@@ -94,13 +104,18 @@ class _LoginPageState extends State<LoginPage> {
 
                     ///se a função login retornar true essa pagina é apagada e o app troca para a HomePage
                     if (validResponse) {
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => HomePage(),
                         ),
                       );
+
                     } else {
+                      setState(() {
+                        is_loading = false;
+                      });
                       _passwordController.clear();
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
@@ -181,5 +196,23 @@ class _LoginPageState extends State<LoginPage> {
       //print(jsonDecode(response.body));
       return false;
     }
+  }
+}
+
+class Formulario extends StatefulWidget {
+  const Formulario({Key? key}) : super(key: key);
+
+  @override
+  _FormularioState createState() => _FormularioState();
+}
+
+class _FormularioState extends State<Formulario> {
+  final _formkey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -51,7 +51,7 @@ Future<List<Vacinas>> getPetVax(String petId) async{
       headers: {'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',}
   );
   if (response.statusCode == 200){
-    print(response.body);
+    //print(response.body);
     return compute(parseVacinas, response.body);
   }else{
     throw Exception('API ERROR ${response.body}');

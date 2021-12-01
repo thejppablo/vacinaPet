@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class Dose{
    String applicationDate;
@@ -38,9 +36,7 @@ class Dose{
      "veterinary": veterinary,
      "petVaccinesId": petVaccinesId,
    };
-  //factory Dose.fromJson(Map<String,dynamic> data) => _$DoseFromJson(data);
 
-  //Map<String,dynamic> toJson() => _$DoseToJson(this);
 }
 
 

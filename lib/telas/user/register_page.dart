@@ -17,6 +17,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final _emailController = TextEditingController();
   final _cpfController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool is_loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,10 @@ class _CadastroPageState extends State<CadastroPage> {
           centerTitle: true,
           backgroundColor: Colors.red,
         ),
-        body: Form(
+        body: is_loading ?
+        Center(child: CircularProgressIndicator(color: Colors.red,),)
+            :
+        Form(
           key: _formkey,
           child: Center(
             child: SingleChildScrollView(
@@ -34,6 +38,8 @@ class _CadastroPageState extends State<CadastroPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+
+              /// Nome
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'nome',
@@ -47,6 +53,8 @@ class _CadastroPageState extends State<CadastroPage> {
                       return null;
                     },
                   ),
+
+              /// E-MAIL
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'e-mail',
@@ -64,6 +72,8 @@ class _CadastroPageState extends State<CadastroPage> {
                       return null;
                     },
                   ),
+
+              /// CPF
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'CPF',
@@ -79,6 +89,8 @@ class _CadastroPageState extends State<CadastroPage> {
                       return null;
                     },
                   ),
+
+              /// Senha
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'senha',
@@ -95,9 +107,9 @@ class _CadastroPageState extends State<CadastroPage> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
+
+                  SizedBox(height: 30.0),
+
                   ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
@@ -105,6 +117,9 @@ class _CadastroPageState extends State<CadastroPage> {
                     onPressed: () async {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (_formkey.currentState!.validate()) {
+                        setState(() {
+                          is_loading = true;
+                        });
                         bool validResponse = await registerUser();
                         if (!currentFocus.hasPrimaryFocus) {
                           currentFocus.unfocus();
@@ -117,6 +132,9 @@ class _CadastroPageState extends State<CadastroPage> {
                             ),
                           );
                         } else {
+                          setState(() {
+                            is_loading = false;
+                          });
                           _passwordController.clear();
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }

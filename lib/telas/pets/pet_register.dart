@@ -102,7 +102,7 @@ class _PetRegisterState extends State<PetRegister> {
                   ),
 ///           Data de nascimento
                   TextFormField(
-                    inputFormatters: [ TextInputMask(mask: '9999-99-99') ],
+                    inputFormatters: [ TextInputMask(mask: '99/99/9999') ],
                     decoration: InputDecoration(
                       labelText: 'data de nascimento',
                     ),
@@ -181,7 +181,7 @@ class _PetRegisterState extends State<PetRegister> {
                         }
                       }
                     },
-                    child: Text("Cadastrar-se"),
+                    child: Text("Cadastrar Pet"),
                   ),
                 ],
               ),
@@ -197,9 +197,17 @@ class _PetRegisterState extends State<PetRegister> {
     ),
   );
 
+  String convertDate(String date){
+    String day = date.substring(0,2);
+    String month = date.substring(3,5);
+    String year = date.substring(6);
+    String str_banco = "$year-$month-$day";
+    return str_banco;
+  }
+
   final snackBar = SnackBar(
     content: Text(
-      "e-mail ou senha são inválidos",
+      "Dados inválidos",
       textAlign: TextAlign.center,
     ),
     backgroundColor: Colors.redAccent,
@@ -219,7 +227,7 @@ class _PetRegisterState extends State<PetRegister> {
         "animal_race": _raceController.text,
         "height": _heightController.text,
         "weight": _weightController.text,
-        "birth_date": _birthDateController.text,
+        "birth_date": convertDate(_birthDateController.text),
         "sex": _sex,
         "userId": sharedPreference.getString('userId').toString(),
       },

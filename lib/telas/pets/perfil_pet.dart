@@ -51,6 +51,7 @@ class _PerfilPetState extends State<PerfilPet> {
               "${widget.pet.birthDate.substring(8,10)}/"
                   "${widget.pet.birthDate.substring(5,7)}/"
                   "${widget.pet.birthDate.substring(0,4)}","",Colors.white),
+          SizedBox(height: 30),
           IconButton(
               icon: Icon(Icons.delete),
               onPressed: () async{
