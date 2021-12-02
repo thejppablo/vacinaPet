@@ -1,6 +1,6 @@
 #
 /lib/rascunhos
-/lib/api
+
 # Miscellaneous
 *.class
 *.log
