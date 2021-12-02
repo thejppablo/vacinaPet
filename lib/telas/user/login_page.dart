@@ -6,6 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:vacina_pet/telas/pets/home_page.dart';
 import 'package:vacina_pet/telas/user/register_page.dart';
+import 'package:vacina_pet/api/notification_api.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,6 +23,14 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool is_loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationApi.init();
+    tz.initializeTimeZones();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => Colors.red)),
                 onPressed: () {
+                  NotificationApi.showScheduledNotification(
+                    title: 'Seu Pet precisa de você!!',
+                    body: 'Falta exatamente 1 Semana para a vacina do seu Pet',
+                    payload: 'coisa.ruim',
+                    scheduledDate: DateTime.now().add(Duration(seconds: 20)),
+                  );
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CadastroPage()));
                 },

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:vacina_pet/telas/pets/home_page.dart';
 
+import 'login_page.dart';
+
 class CadastroPage extends StatefulWidget {
   const CadastroPage({Key? key}) : super(key: key);
 
@@ -74,21 +76,6 @@ class _CadastroPageState extends State<CadastroPage> {
                   ),
 
               /// CPF
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'CPF',
-                    ),
-                    controller: _cpfController,
-                    keyboardType: TextInputType.text,
-                    validator: (cpf) {
-                      if (cpf == null || cpf.isEmpty) {
-                        return 'Por favor, digite seu cpf';
-                      } else if (cpf.length != 11) {
-                        return 'Por favor, digite um cpf com 9 caracteres';
-                      }
-                      return null;
-                    },
-                  ),
 
               /// Senha
                   TextFormField(
@@ -128,7 +115,7 @@ class _CadastroPageState extends State<CadastroPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                              builder: (context) => LoginPage(),
                             ),
                           );
                         } else {
@@ -165,7 +152,7 @@ class _CadastroPageState extends State<CadastroPage> {
         "name": _nameController.text,
         "email": _emailController.text,
         "password": _passwordController.text,
-        "cpf": _cpfController.text
+
       },
     );
     if (response.statusCode == 201) {
