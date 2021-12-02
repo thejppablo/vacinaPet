@@ -107,7 +107,7 @@ class _PetListState extends State<PetList> {
         } else {
           return Container(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: Colors.red,),
             ),
           );
         }

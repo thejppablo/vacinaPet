@@ -217,20 +217,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class Formulario extends StatefulWidget {
-  const Formulario({Key? key}) : super(key: key);
-
-  @override
-  _FormularioState createState() => _FormularioState();
-}
-
-class _FormularioState extends State<Formulario> {
-  final _formkey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
