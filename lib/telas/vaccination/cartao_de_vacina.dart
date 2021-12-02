@@ -44,7 +44,6 @@ class _CartaoVacinaState extends State<CartaoVacina> {
   Widget build(BuildContext context) {
     final appbarTitles = ["Vacinas","Vermífugos","${widget.pet.name}"];
     final screens = [
-      //ListViewVax(widget.pet.id),
       PetVaccineList(widget.pet),
       ListViewVax(widget.pet.id),
       //Center(child: Text("Vermífugos",style: TextStyle(fontSize: 60),)),

@@ -18,13 +18,20 @@ class _PetVaccineListState extends State<PetVaccineList> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
 
-              return ListView.separated(
-                  separatorBuilder: (_, __) => Divider(),
+              return ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  //separatorBuilder: (_, __) => Divider(),
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text("${snapshot.data[index].name}"),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        tileColor: Colors.redAccent,
+                        title: Text(
+                          "${snapshot.data[index].name}",
+                          style: TextStyle(color: Colors.white,fontSize: 20),),
 
+                      ),
                     );
                   }
                   );
