@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:easy_mask/easy_mask.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +29,21 @@ class _PetRegisterState extends State<PetRegister> {
   final _birthDateController =    TextEditingController();
   final sexes = ['Macho','Fêmea'];
   String? _sex;
+  File? image;
+
+
+  Future pickImage() async{
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() => this.image = imageTemporary);
+
+    } on PlatformException catch (e){
+      print('Falha ao celecionar imagem: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +61,37 @@ class _PetRegisterState extends State<PetRegister> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+
+
+                  image != null
+                      ? Image.file(
+                          image!,
+                          height: 250,
+                          fit: BoxFit.fill,
+                  )
+                     : FlutterLogo( size: 0),
+                  const SizedBox(height: 15),
+
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                      textStyle: TextStyle(fontSize: 20),
+                    ) ,
+                    onPressed: () => pickImage(),
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera_alt_outlined, size: 28,),
+                        const SizedBox(width: 16),
+                        Text('Inserir foto do Pet'),
+                      ],
+                    ),
+                  ),
+
 ///           Nome
                   TextFormField(
                     decoration: InputDecoration(
@@ -212,6 +260,7 @@ class _PetRegisterState extends State<PetRegister> {
     var response = await http.post(
       url,
       headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
       },
       body: {
