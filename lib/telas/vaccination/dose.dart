@@ -49,6 +49,7 @@ List<Dose> parseDose(String responseBody) {
 }
 
 Future<bool> registerDose() async {
+  DateTime now = new DateTime.now();
   SharedPreferences sharedPreference = await SharedPreferences.getInstance();
 
   var url = Uri.parse('https://cvd-pets.herokuapp.com/doses');
