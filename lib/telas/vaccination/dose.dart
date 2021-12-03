@@ -49,8 +49,8 @@ List<Dose> parseDose(String responseBody) {
 }
 
 Future<bool> registerDose() async {
+  DateTime now = new DateTime.now();
   SharedPreferences sharedPreference = await SharedPreferences.getInstance();
-
   var url = Uri.parse('https://cvd-pets.herokuapp.com/doses');
   var response = await http.post(
     url,
@@ -58,15 +58,15 @@ Future<bool> registerDose() async {
       'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
     },
     body: {
-      "application_date": "2021-12-02T23:03:51.115Z",
-      "manufacturing_date": "2021-12-02T23:03:51.115Z",
+      "application_date": "2021-12-03T08:42:41.441Z",
+      "manufacturing_date": "2021-12-03T08:42:41.441Z",
       "expiration_date": "2021-12-02T23:03:51.115Z",
-      "dosage": "string",
+      "dosage": "dose",
       "veterinary": "string",
       "petVaccinesId": "string"
     },
   );
-  if (response.statusCode == 201) {
+  if (response.statusCode == 201 || response.statusCode == 200) {
     print("Dose registrada");
     return true;
   } else {

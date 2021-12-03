@@ -150,7 +150,7 @@ class _PetRegisterState extends State<PetRegister> {
                 ),
                 ///           Data de nascimento
                 TextFormField(
-                  inputFormatters: [ TextInputMask(mask: '9999-99-99') ],
+                  inputFormatters: [ TextInputMask(mask: '99/99/9999') ],
                   decoration: InputDecoration(
                     labelText: 'data de nascimento',
                   ),
@@ -158,7 +158,7 @@ class _PetRegisterState extends State<PetRegister> {
                   keyboardType: TextInputType.number,
                   // TODO: implementar um error check mais robusto
                   validator: (date) {
-                    print("CCCCCCCCCCCC: ");
+                    //print("CCCCCCCCCCCC: ");
                     //print(date!.length);
                     print(_birthDateController.text);
                     /*
@@ -260,7 +260,7 @@ class _PetRegisterState extends State<PetRegister> {
     var response = await http.post(
       url,
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
       },
       body: {
@@ -268,7 +268,7 @@ class _PetRegisterState extends State<PetRegister> {
         "animal_race": _raceController.text,
         "height": _heightController.text,
         "weight": _weightController.text,
-        "birth_date": _birthDateController.text,
+        "birth_date": dateSend(_birthDateController.text),
         "sex": _sex,
         "userId": sharedPreference.getString('userId').toString(),
       },
@@ -283,4 +283,14 @@ class _PetRegisterState extends State<PetRegister> {
     }
   }
 
+}
+
+String dateSend(String date){
+// 9 9 - 9 9 - 9 9 9 9
+// 0 1 2 3 4 5 6 7 8 9
+  String day = date.substring(0,2);
+  String month = date.substring(3,5);
+  String year = date.substring(6);
+
+  return "$year-$month-$day";
 }
