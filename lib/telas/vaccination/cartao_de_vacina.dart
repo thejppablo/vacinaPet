@@ -45,7 +45,7 @@ class _CartaoVacinaState extends State<CartaoVacina> {
     final appbarTitles = ["Vacinas","Vermífugos","${widget.pet.name}"];
     final screens = [
       PetVaccineList(widget.pet),
-      ListViewVax(widget.pet.id),
+      //ListViewVax(widget.pet.id),
       //Center(child: Text("Vermífugos",style: TextStyle(fontSize: 60),)),
       PerfilPet(widget.pet)
     ];
@@ -82,11 +82,7 @@ class _CartaoVacinaState extends State<CartaoVacina> {
               label: 'Vacinas',
               //backgroundColor: Colors.blue
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Vermífugos',
-            //backgroundColor: Colors.blue
-          ),
+
           BottomNavigationBarItem(
               icon: Icon(Icons.pets),
               label: 'Perfil',
