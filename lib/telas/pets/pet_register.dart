@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:vacina_pet/api/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:easy_mask/easy_mask.dart';
@@ -9,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'home_page.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 
 
@@ -30,7 +32,13 @@ class _PetRegisterState extends State<PetRegister> {
   final sexes = ['Macho','Fêmea'];
   String? _sex;
   File? image;
+  @override
+  void initState() {
+    super.initState();
 
+    NotificationApi.init();
+    tz.initializeTimeZones();
+  }
 
   Future pickImage() async{
     try {
@@ -74,7 +82,7 @@ class _PetRegisterState extends State<PetRegister> {
                 )
                     : FlutterLogo( size: 0),
                 const SizedBox(height: 15),
-
+/*
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(50),
@@ -91,6 +99,8 @@ class _PetRegisterState extends State<PetRegister> {
                     ],
                   ),
                 ),
+
+ */
 
                 ///           Nome
                 TextFormField(
@@ -123,7 +133,7 @@ class _PetRegisterState extends State<PetRegister> {
                 ///           Altura
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Altura(M)',
+                    labelText: 'Altura(Cm)',
                   ),
                   controller: _heightController,
                   keyboardType: TextInputType.number,
@@ -210,6 +220,14 @@ class _PetRegisterState extends State<PetRegister> {
                       backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => Colors.red)),
                   onPressed: () async {
+
+                    NotificationApi.showScheduledNotification(
+                      title: 'Seu pet ' + _nameController.text + ' foi cadastrado!!!',
+                      body: 'Avisaremos sempre que a ' + _nameController.text + ' precisar tomar vacina.' ,
+                      payload: 'coisa.ruim',
+                      scheduledDate: DateTime.now().add(Duration(seconds: 20)),
+                    );
+
                     FocusScopeNode currentFocus = FocusScope.of(context);
                     if (_formkey.currentState!.validate()) {
                       bool validResponse = await registerPet();

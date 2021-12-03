@@ -21,6 +21,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final _passwordController = TextEditingController();
   bool is_loading = false;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +60,7 @@ class _CadastroPageState extends State<CadastroPage> {
               /// E-MAIL
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'e-mail',
+                      labelText: 'E-mail',
                     ),
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -79,8 +80,9 @@ class _CadastroPageState extends State<CadastroPage> {
 
               /// Senha
                   TextFormField(
+                    obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'senha',
+                      labelText: 'Senha',
                     ),
                     controller: _passwordController,
                     //obscureText: true,
@@ -116,6 +118,8 @@ class _CadastroPageState extends State<CadastroPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => LoginPage(),
+
+
                             ),
                           );
                         } else {
@@ -158,6 +162,7 @@ class _CadastroPageState extends State<CadastroPage> {
     if (response.statusCode == 201) {
       print("DEU BOM");
       print(jsonDecode(response.body)['accessToken']);
+
       return true;
     } else {
       print("Resposta: ${response.statusCode}");
