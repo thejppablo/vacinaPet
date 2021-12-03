@@ -10,7 +10,6 @@ import 'package:vacina_pet/api/notification_api.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -22,8 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool is_loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -32,150 +29,137 @@ class _LoginPageState extends State<LoginPage> {
     tz.initializeTimeZones();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: is_loading ? Center(
-          child: CircularProgressIndicator(
-            color: Colors.red,
-          ),
-        ) :
+        body: Form(
+          key: _formkey,
+          child: Center(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text("Vacinapet", style: TextStyle(fontFamily: 'Sofadi One',fontSize: 50,height: 5),),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Usuário',
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(top: 0),
+                        child: Icon(
+                          Icons.account_box_outlined,
+                        ),
+                      ),
+                    ),
+                    controller: _usernameController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (username) {
+                      if (username == null || username.isEmpty) {
+                        return 'Por favor, digite seu usuário';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Senha',
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Icon(Icons.lock_outlined),
+                      ),
+                    ),
+                    controller: _passwordController,
+                    keyboardType: TextInputType.text,
+                    validator: (password) {
+                      if (password == null || password.isEmpty) {
+                        return 'Por favor, digite sua senha';
+                      } else if (password.length < 6) {
+                        return 'Por favor, digite uma senha maior que 6 caracteres';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                    width: 30.0,
+                  ),
 
-        Form(
-      key: _formkey,
-      child: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text("Vacinapet", style: TextStyle(fontFamily: 'Sofadi One',fontSize: 50,height: 5),),
-              TextFormField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Usuário',
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.only(top: 0),
-                    child: Icon(
-                      Icons.account_box_outlined,
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.resolveWith((states) => Colors.red),
+                    ),
+                    onPressed: () async {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (_formkey.currentState!.validate()) {
+                        bool validResponse = await login();
+
+                        ///o foco nesse caso seria o teclado do celular aberto
+                        if (!currentFocus.hasPrimaryFocus) {
+                          ///se ele tem o foco atual ele é desfocado e o teclado sera fechado
+                          currentFocus.unfocus();
+                        }
+
+                        ///se a função login retornar true essa pagina é apagada e o app troca para a HomePage
+                        if (validResponse) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ),
+                          );
+                        } else {
+                          _passwordController.clear();
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      }
+                    },
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
-                ),
-                controller: _usernameController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (username) {
-                  if (username == null || username.isEmpty) {
-                    return 'Por favor, digite seu usuário';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: 'Senha',
-                  prefixIcon: Padding(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Icon(Icons.lock_outlined),
+                  Container(
+                    height: 150,
+                    child: Align(
+                        alignment: Alignment(-0.70, 1.00),
+                        child: Text(
+                          'Não possui uma conta?',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        )),
                   ),
-                ),
-                controller: _passwordController,
-                keyboardType: TextInputType.text,
-                validator: (password) {
-                  if (password == null || password.isEmpty) {
-                    return 'Por favor, digite sua senha';
-                  } else if (password.length < 6) {
-                    return 'Por favor, digite uma senha maior que 6 caracteres';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 30.0,
-                width: 30.0,
-              ),
 
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.resolveWith((states) => Colors.red),
-                ),
-                onPressed: () async {
-                  FocusScopeNode currentFocus = FocusScope.of(context);
-                  if (_formkey.currentState!.validate()) {
-                    setState(() {
-                      is_loading = true;
-                    });
-                    bool validResponse = await login();
-
-                    ///o foco nesse caso seria o teclado do celular aberto
-                    if (!currentFocus.hasPrimaryFocus) {
-                      ///se ele tem o foco atual ele é desfocado e o teclado sera fechado
-                      currentFocus.unfocus();
-                    }
-
-                    ///se a função login retornar true essa pagina é apagada e o app troca para a HomePage
-                    if (validResponse) {
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => Colors.red)),
+                    onPressed: () {
+                      NotificationApi.showScheduledNotification(
+                        title: 'Seu Pet precisa de você!!',
+                        body: 'Falta exatamente 1 Semana para a vacina do seu Pet',
+                        payload: 'coisa.ruim',
+                        scheduledDate: DateTime.now().add(Duration(seconds: 20)),
                       );
-
-                    } else {
-                      setState(() {
-                        is_loading = false;
-                      });
-                      _passwordController.clear();
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  }
-                },
-                child: Center(
-                  child: Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              Container(
-                height: 150,
-                child: Align(
-                    alignment: Alignment(-0.70, 1.00),
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CadastroPage()));
+                    },
                     child: Text(
-                      'Não possui uma conta?',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    )),
+                      "Cadastre-se",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
               ),
-
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => Colors.red)),
-                onPressed: () {
-                  NotificationApi.showScheduledNotification(
-                    title: 'Seu Pet precisa de você!!',
-                    body: 'Falta exatamente 1 Semana para a vacina do seu Pet',
-                    payload: 'coisa.ruim',
-                    scheduledDate: DateTime.now().add(Duration(seconds: 20)),
-                  );
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CadastroPage()));
-                },
-                child: Text(
-                  "Cadastre-se",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   final snackBar = SnackBar(
@@ -216,4 +200,3 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
-
