@@ -44,7 +44,7 @@ Future<bool> postVaccines(PetVaccines vacina, var dose) async{
         "application_date": "2021-11-26T01:58:20.626Z",
         "manufacturing_date": "2021-11-26T01:58:20.626Z",
         "expiration_date": "2021-11-26T01:58:20.626Z",
-        "order": [{}],
+        "order": "order",
         "dosage": "string",
         "veterinary": "string",
         "petVaccinesId": "string"

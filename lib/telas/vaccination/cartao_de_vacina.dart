@@ -4,7 +4,7 @@ import 'package:vacina_pet/telas/pets/perfil_pet.dart';
 import 'package:vacina_pet/telas/pets/pets.dart';
 import 'package:vacina_pet/telas/vaccination/pet_vaccine_list.dart';
 
-import 'register_vaccine.dart';
+import 'list_view_vax.dart';
 
 /*
 void main() {
@@ -42,11 +42,9 @@ class _CartaoVacinaState extends State<CartaoVacina> {
 
   @override
   Widget build(BuildContext context) {
-    final appbarTitles = ["Vacinas","Vermífugos","${widget.pet.name}"];
+    final appbarTitles = ["Vacinas","${widget.pet.name}"];
     final screens = [
       PetVaccineList(widget.pet),
-      //ListViewVax(widget.pet.id),
-      //Center(child: Text("Vermífugos",style: TextStyle(fontSize: 60),)),
       PerfilPet(widget.pet)
     ];
     return Scaffold(

@@ -41,7 +41,7 @@ class _PetRegisterState extends State<PetRegister> {
       setState(() => this.image = imageTemporary);
 
     } on PlatformException catch (e){
-      print('Falha ao celecionar imagem: $e');
+      print('Falha ao selecionar imagem: $e');
     }
   }
 
@@ -70,6 +70,7 @@ class _PetRegisterState extends State<PetRegister> {
                     ? Image.file(
                   image!,
                   height: 250,
+                  width: 250,
                   fit: BoxFit.fill,
                 )
                     : FlutterLogo( size: 0),
@@ -158,19 +159,9 @@ class _PetRegisterState extends State<PetRegister> {
                   keyboardType: TextInputType.number,
                   // TODO: implementar um error check mais robusto
                   validator: (date) {
-                    //print("CCCCCCCCCCCC: ");
-                    //print(date!.length);
+
                     print(_birthDateController.text);
-                    /*
-                      var ano = int.parse(_birthDateController.text.substring(4));
-                      var mes = int.parse(_birthDateController.text.substring(2,4));
-                      var dia = int.parse(_birthDateController.text.substring(0,2));
-                      DateTime hoje = DateTime.now();
-                      || ano > hoje.year
-                      || ano <= 1990
-                      || mes > 12 || mes < 1
-                      || dia > 31 || dia < 1
-                      */
+
                     if (date == null || date.isEmpty) {
                       return 'Por favor, digite uma data';
                     } else if (date.length != 10) {

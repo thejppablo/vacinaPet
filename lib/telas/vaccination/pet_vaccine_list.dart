@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:vacina_pet/telas/pets/pets.dart';
-import 'package:vacina_pet/telas/vaccination/register_vaccine.dart';
+import 'package:vacina_pet/telas/vaccination/doses_info.dart';
+import 'package:vacina_pet/telas/vaccination/list_view_vax.dart';
 import 'package:vacina_pet/telas/vaccination/vacinas_json.dart';
 
 class PetVaccineList extends StatefulWidget {
@@ -31,6 +32,10 @@ class _PetVaccineListState extends State<PetVaccineList> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
+                          onTap: (){
+                            Route route = MaterialPageRoute(builder: (context) => ListDoses(snapshot.data[index].id));
+                            Navigator.push(context, route).then(onGoBack);
+                          },
                           tileColor: Colors.redAccent,
                           title: Text(
                             "${snapshot.data[index].name}",

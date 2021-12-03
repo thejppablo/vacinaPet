@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vacina_pet/telas/vaccination/pet_vaccines.dart';
+import 'package:vacina_pet/telas/vaccination/pet_vaccines_class.dart';
 import 'package:vacina_pet/telas/vaccination/vacinas_json.dart';
 import 'dose.dart';
 
@@ -15,11 +15,11 @@ class ListViewVax extends StatefulWidget {
 
 class _ListViewVaxState extends State<ListViewVax> {
   //int? vaxIndex;
+  String chosenVaxId = "";
   Dose dose = Dose(
       applicationDate: "2021-11-26",
       manufacturingDate: "2021-11-26",
       expirationDate: "2021-11-26",
-      order: 1,
       dosage: "dose",
       veterinary: "Pedro",
       petVaccinesId: "");
@@ -44,22 +44,14 @@ class _ListViewVaxState extends State<ListViewVax> {
                   return ListTile(
                     title: Text("${snapshot.data[index].name}"),
                     onTap: ()  async{
-                      /*
-                      lista.add(dose);
-                      PetVaccines chosenVax = PetVaccines(
-                          vaccineId: snapshot.data[index].id,
-                          petId: widget.petId,
-                          doses: lista,
-                      );
-                      await postVaccines(chosenVax,dose);
-                      */
+
                       bool isVaxIn = false;
                       var chosenVaxObj = snapshot.data[index];
                       for(int indice = 0; indice < widget.vacinas_do_pet.length; indice++){
                         if(widget.vacinas_do_pet[indice].name == chosenVaxObj.name){
                           print("JA TEM A VACINA ${widget.vacinas_do_pet[indice].name}");
                           isVaxIn = true;
-                          await registerDose();
+                          await registerDose(widget.vacinas_do_pet[indice].id);
                         }
                       }
                       if(isVaxIn == false){
