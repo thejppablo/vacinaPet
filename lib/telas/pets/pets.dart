@@ -89,6 +89,7 @@ Future<bool> deletePet(String petId) async{
     return true;
   }else{
     print("RESPOSTA: ${response.statusCode}");
+    print("BODY: ${response.body}");
     throw Exception('API ERROR ${response.body}');
   }
 }

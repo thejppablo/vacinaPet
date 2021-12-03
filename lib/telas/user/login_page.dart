@@ -6,7 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:vacina_pet/telas/pets/home_page.dart';
 import 'package:vacina_pet/telas/user/register_page.dart';
-
+import 'package:vacina_pet/api/notification_api.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,13 +21,27 @@ class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool is_loading = false;
 
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationApi.init();
+    tz.initializeTimeZones();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Form(
+    return
+      Scaffold(
+        body:
+        is_loading ?
+        Center(
+          child: CircularProgressIndicator(),
+        ) :
+        Form(
           key: _formkey,
           child: Center(
             child: SingleChildScrollView(
@@ -56,9 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextFormField(
                     textAlign: TextAlign.center,
-                    obscureText: true,
                     decoration: InputDecoration(
-
                       hintText: 'Senha',
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(top: 15),
@@ -87,8 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                       MaterialStateProperty.resolveWith((states) => Colors.red),
                     ),
                     onPressed: () async {
+                      setState(() {
+                        is_loading = true;
+                      });
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (_formkey.currentState!.validate()) {
+
+
                         bool validResponse = await login();
 
                         ///o foco nesse caso seria o teclado do celular aberto
@@ -106,6 +125,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         } else {
+                          setState(() {
+                            is_loading = false;
+                          });
                           _passwordController.clear();
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
@@ -135,6 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: MaterialStateProperty.resolveWith(
                                 (states) => Colors.red)),
                     onPressed: () {
+                      NotificationApi.showScheduledNotification(
+                        title: 'Seu Pet precisa de você!!',
+                        body: 'Falta exatamente 1 Semana para a vacina do seu Pet',
+                        payload: 'coisa.ruim',
+                        scheduledDate: DateTime.now().add(Duration(seconds: 20)),
+                      );
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => CadastroPage()));
                     },
@@ -147,7 +175,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-        ));
+        )
+      );
   }
 
   final snackBar = SnackBar(
@@ -182,6 +211,7 @@ class _LoginPageState extends State<LoginPage> {
       */
       return true;
     } else {
+      print("ERRO NO LOGIN");
       //print("Resposta: ${response.statusCode}");
       //print(jsonDecode(response.body));
       return false;

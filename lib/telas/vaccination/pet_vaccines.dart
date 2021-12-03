@@ -1,8 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vacina_pet/telas/vaccination/vacinas_json.dart';
 import 'dose.dart';
 
 class PetVaccines{
@@ -51,8 +49,6 @@ Future<bool> postVaccines(PetVaccines vacina, var dose) async{
         "veterinary": "string",
         "petVaccinesId": "string"
       }]};
-  print("TIPO DO TO JSON ${json.encode(body).runtimeType}");
-  print("BODY DO JSON $body");
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var url = Uri.parse('https://cvd-pets.herokuapp.com/pet-vaccines');
   var response = await http.post(url,
@@ -64,7 +60,8 @@ Future<bool> postVaccines(PetVaccines vacina, var dose) async{
   );
 
   if(response.statusCode == 201){
-    print("VACINA REGISTRADA ${response.body}");
+    //print("VACINA REGISTRADA ${response.body}");
+    print("vacina registrada com sucesso");
     return true;
 
   }else{
