@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:vacina_pet/api/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:easy_mask/easy_mask.dart';
@@ -9,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'home_page.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 
 
@@ -30,7 +32,13 @@ class _PetRegisterState extends State<PetRegister> {
   final sexes = ['Macho','Fêmea'];
   String? _sex;
   File? image;
+  @override
+  void initState() {
+    super.initState();
 
+    NotificationApi.init();
+    tz.initializeTimeZones();
+  }
 
   Future pickImage() async{
     try {
@@ -74,7 +82,7 @@ class _PetRegisterState extends State<PetRegister> {
                 )
                     : FlutterLogo( size: 0),
                 const SizedBox(height: 15),
-
+/*
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size.fromHeight(50),
@@ -91,6 +99,8 @@ class _PetRegisterState extends State<PetRegister> {
                     ],
                   ),
                 ),
+
+ */
 
                 ///           Nome
                 TextFormField(
@@ -123,7 +133,7 @@ class _PetRegisterState extends State<PetRegister> {
                 ///           Altura
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Altura(M)',
+                    labelText: 'Altura(Cm)',
                   ),
                   controller: _heightController,
                   keyboardType: TextInputType.number,
@@ -150,7 +160,7 @@ class _PetRegisterState extends State<PetRegister> {
                 ),
                 ///           Data de nascimento
                 TextFormField(
-                  inputFormatters: [ TextInputMask(mask: '9999-99-99') ],
+                  inputFormatters: [ TextInputMask(mask: '99/99/9999') ],
                   decoration: InputDecoration(
                     labelText: 'data de nascimento',
                   ),
@@ -158,7 +168,7 @@ class _PetRegisterState extends State<PetRegister> {
                   keyboardType: TextInputType.number,
                   // TODO: implementar um error check mais robusto
                   validator: (date) {
-                    print("CCCCCCCCCCCC: ");
+                    //print("CCCCCCCCCCCC: ");
                     //print(date!.length);
                     print(_birthDateController.text);
                     /*
@@ -210,6 +220,14 @@ class _PetRegisterState extends State<PetRegister> {
                       backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => Colors.red)),
                   onPressed: () async {
+
+                    NotificationApi.showScheduledNotification(
+                      title: 'Seu pet ' + _nameController.text + ' foi cadastrado!!!',
+                      body: 'Avisaremos sempre que a ' + _nameController.text + ' precisar tomar vacina.' ,
+                      payload: 'coisa.ruim',
+                      scheduledDate: DateTime.now().add(Duration(seconds: 20)),
+                    );
+
                     FocusScopeNode currentFocus = FocusScope.of(context);
                     if (_formkey.currentState!.validate()) {
                       bool validResponse = await registerPet();
@@ -260,7 +278,7 @@ class _PetRegisterState extends State<PetRegister> {
     var response = await http.post(
       url,
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        //'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
       },
       body: {
@@ -268,7 +286,7 @@ class _PetRegisterState extends State<PetRegister> {
         "animal_race": _raceController.text,
         "height": _heightController.text,
         "weight": _weightController.text,
-        "birth_date": _birthDateController.text,
+        "birth_date": dateSend(_birthDateController.text),
         "sex": _sex,
         "userId": sharedPreference.getString('userId').toString(),
       },
@@ -283,4 +301,14 @@ class _PetRegisterState extends State<PetRegister> {
     }
   }
 
+}
+
+String dateSend(String date){
+// 9 9 - 9 9 - 9 9 9 9
+// 0 1 2 3 4 5 6 7 8 9
+  String day = date.substring(0,2);
+  String month = date.substring(3,5);
+  String year = date.substring(6);
+
+  return "$year-$month-$day";
 }
