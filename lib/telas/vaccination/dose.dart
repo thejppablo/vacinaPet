@@ -20,18 +20,18 @@ class Dose{
     required this.petVaccinesId});
 
   factory Dose.fromJson(Map<String, dynamic> json) => Dose(
-    applicationDate: json["applicationDate"],
-    manufacturingDate: json["manufacturingDate"],
-    expirationDate: json["expirationDate"],
+    applicationDate: json["application_date"],
+    manufacturingDate: json["manufacturing_date"],
+    expirationDate: json["expiration_date"],
     dosage: json["dosage"],
     veterinary: json["veterinary"],
     petVaccinesId: json["petVaccinesId"],
   );
 
    Map<String, dynamic> toJson() => {
-     "applicationDate": applicationDate,
-     "manufacturingDate": manufacturingDate,
-     "expirationDate": expirationDate,
+     "application_date": applicationDate,
+     "manufacturing_date": manufacturingDate,
+     "expiration_date": expirationDate,
      "dosage": dosage,
      "veterinary": veterinary,
      "petVaccinesId": petVaccinesId,
@@ -61,14 +61,11 @@ Future<bool> registerDose(String vaxId) async {
       'Authorization': 'Bearer ${sharedPreference.getString('accessToken').toString()}',
     },
     body: {
-      //"application_date": now.toString().substring(0,10),
-      //"manufacturing_date": oldDate.toString().substring(0,10),
-      //"expiration_date": newDate.toString().substring(0,10),
-      "application_date": "2021-12-03T19:24:13.991Z",
-      "manufacturing_date": "2021-12-03T19:24:13.991Z",
-      "expiration_date": "2021-12-03T19:24:13.991Z",
+      "application_date": now.toString().substring(0,10),
+      "manufacturing_date": oldDate.toString().substring(0,10),
+      "expiration_date": newDate.toString().substring(0,10),
       "dosage": "5 ML",
-      "veterinary": "nome",
+      "veterinary": "George",
       "petVaccinesId": vaxId
     },
   );
@@ -92,7 +89,8 @@ Future<List<Dose>> fetchDoses(String petVaccinesId) async{
       }
   );
   if (response.statusCode == 200){
-    //print("Doses dessa vacina: ${response.body}");
+    print("Doses dessa vacina: ${response.body}");
+
     var computado = compute(parseDose, response.body);
     //print(json.encode(parseDose(response.body)));
     return computado;

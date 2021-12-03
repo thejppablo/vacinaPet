@@ -14,20 +14,25 @@ class ListViewVax extends StatefulWidget {
 }
 
 class _ListViewVaxState extends State<ListViewVax> {
+
   //int? vaxIndex;
   String chosenVaxId = "";
-  Dose dose = Dose(
-      applicationDate: "2021-11-26",
-      manufacturingDate: "2021-11-26",
-      expirationDate: "2021-11-26",
-      dosage: "dose",
-      veterinary: "Pedro",
-      petVaccinesId: "");
+
   List<Dose> lista = [];
   //late PetVaccines chosenVax;
 
   @override
   Widget build(BuildContext context) {
+    DateTime now =  DateTime.now();
+    var oldDate =  DateTime(now.year, now.month - 6, now.day);
+    var newDate =  DateTime(now.year, now.month + 6, now.day);
+    Dose dose = Dose(
+        applicationDate: "${now.toString().substring(0,10)}",
+        manufacturingDate: "${oldDate.toString().substring(0,10)}",
+        expirationDate: "${newDate.toString().substring(0,10)}",
+        dosage: "dose",
+        veterinary: "Pedro",
+        petVaccinesId: "");
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.red,),
       body: FutureBuilder(

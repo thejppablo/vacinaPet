@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:vacina_pet/api/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:easy_mask/easy_mask.dart';
@@ -9,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'home_page.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
 
 
 class PetRegister extends StatefulWidget {
@@ -18,6 +19,7 @@ class PetRegister extends StatefulWidget {
   @override
   _PetRegisterState createState() => _PetRegisterState();
 }
+
 
 class _PetRegisterState extends State<PetRegister> {
 
@@ -31,13 +33,23 @@ class _PetRegisterState extends State<PetRegister> {
   String? _sex;
   File? image;
 
+  @override
+  void initState() {
+    super.initState();
 
-  Future pickImage() async{
+    NotificationApi.init();
+    tz.initializeTimeZones();
+  }
+
+  Future pickImage(String petName) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
+      //await prefs.setString(petName, image.path);
       setState(() => this.image = imageTemporary);
 
     } on PlatformException catch (e){
@@ -83,7 +95,7 @@ class _PetRegisterState extends State<PetRegister> {
                     onPrimary: Colors.black,
                     textStyle: TextStyle(fontSize: 20),
                   ) ,
-                  onPressed: () => pickImage(),
+                  onPressed: () => pickImage(_nameController.text),
                   child: Row(
                     children: [
                       Icon(Icons.camera_alt_outlined, size: 28,),
@@ -201,6 +213,14 @@ class _PetRegisterState extends State<PetRegister> {
                       backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => Colors.red)),
                   onPressed: () async {
+
+                    NotificationApi.showScheduledNotification(
+                      title: 'Seu pet ' + _nameController.text + ' foi cadastrado!!!',
+                      body: 'Avisaremos sempre que ' + _nameController.text + ' precisar tomar vacina.' ,
+                      payload: 'coisa.ruim',
+                      scheduledDate: DateTime.now().add(Duration(seconds: 20)),
+                    );
+
                     FocusScopeNode currentFocus = FocusScope.of(context);
                     if (_formkey.currentState!.validate()) {
                       bool validResponse = await registerPet();

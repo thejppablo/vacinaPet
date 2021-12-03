@@ -17,7 +17,6 @@ class _CadastroPageState extends State<CadastroPage> {
   final _formkey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _cpfController = TextEditingController();
   final _passwordController = TextEditingController();
   bool is_loading = false;
 
@@ -44,7 +43,7 @@ class _CadastroPageState extends State<CadastroPage> {
               /// Nome
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'nome',
+                      labelText: 'Nome',
                     ),
                     controller: _nameController,
                     keyboardType: TextInputType.text,
@@ -59,7 +58,7 @@ class _CadastroPageState extends State<CadastroPage> {
               /// E-MAIL
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'e-mail',
+                      labelText: 'E-mail',
                     ),
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -75,12 +74,11 @@ class _CadastroPageState extends State<CadastroPage> {
                     },
                   ),
 
-              /// CPF
-
               /// Senha
                   TextFormField(
+                    obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'senha',
+                      labelText: 'Senha',
                     ),
                     controller: _passwordController,
                     //obscureText: true,
